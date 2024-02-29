@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Subjects</title>
+</head>
+<body>
+    <h1>{{ faculty.name }} Subjects</h1>
+    <ul>
+        {% for subject in subjects %}
+            <li><a href="{% url 'subject_students' subject.id %}">{{ subject.subject_name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

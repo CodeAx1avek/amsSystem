@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Login - Attendance Management System{% endblock %}
+{% block title %}Home - Attendance Management System{% endblock %}
 
 {% block content %}
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-    </form>
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" value="Login">
+</form>
 {% endblock %}

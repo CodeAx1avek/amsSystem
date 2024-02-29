@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance</title>
+    <!-- Add your CSS link or styles here -->
+</head>
+<body>
+    <h1>Mark Attendance</h1>
+    <h2>Subject: {{ subject.subject_name }}</h2>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post" action="{% url 'mark_attendance' subject_id=subject.id %}">
+        {% csrf_token %}
+        <ul>
+            {% for student in students %}
+            <li>
+                <strong>Name:</strong> {{ student.name }}<br>
+                <strong>Roll Number:</strong> {{ student.roll_no }}<br>
+                <!-- Radio buttons for marking attendance -->
+                <input type="radio" id="present_{{ student.id }}" name="status_{{ student.id }}" value="Present">
+                <label for="present_{{ student.id }}">Present</label>
+                <input type="radio" id="absent_{{ student.id }}" name="status_{{ student.id }}" value="Absent">
+                <label for="absent_{{ student.id }}">Absent</label>
+            </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Submit Attendance</button>
+    </form>
+</body>
+</html>

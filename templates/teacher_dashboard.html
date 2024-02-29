@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ teacher.user.username }}</h1>
+    <h2>Faculties:</h2>
+    {% if faculties %}
+        <ul>
+            {% for faculty in faculties %}
+                <li>
+                    <form action="{% url 'faculty_subjects' faculty.id %}" method="get">
+                        <button type="submit">View Subjects for {{ faculty.name }}</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No faculties associated with this teacher.</p>
+    {% endif %}
+</body>
+</html>

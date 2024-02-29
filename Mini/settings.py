@@ -12,12 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '6%8w&z&n-y0rt5h17uwb$7kv+ambvmd#8!%uat)a#u_etgb4z2'
@@ -84,6 +79,14 @@ DATABASES = {
 
 # Auto-created primary key type
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+# settings.py
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'attendance_cache_table',
+    }
+}
 
 
 # Password validation
