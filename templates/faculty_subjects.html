@@ -1,0 +1,49 @@
+<!-- faculty_subjects.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}{{ faculty.name }} Subjects - Attendance Management System{% endblock %}
+
+{% block content %}
+<style>
+    /* styles.css */
+
+/* Subject list styling */
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #45a049;
+}
+
+</style>
+
+<h1>{{ faculty.name }} Subjects</h1>
+<ul>
+    {% for subject in subjects %}
+        <li><a href="{% url 'subject_students' subject.id %}">{{ subject.subject_name }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
