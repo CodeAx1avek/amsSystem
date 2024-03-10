@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* Your CSS styles here */
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .card {
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .card h4 {
+        margin-bottom: 10px;
+    }
+
+    .attendance-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .attendance-table th {
+        background-color: #f2f2f2;
+    }
+
+    .attendance-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .attendance-table tbody tr:hover {
+        background-color: #ddd;
+    }
+
+    /* Custom styling for specific subject names */
+    .subject-web3 {
+        color: #ff5733;  /* Orange color */
+    }
+
+    .subject-best-css {
+        color: #4caf50;  /* Green color */
+    }
+    .subject-list {
+        list-style-type: none;  /* Remove default bullet points */
+        padding: 0;
+        margin: 0;
+    }
+
+    .subject-list li {
+        margin-bottom: 10px;  /* Add spacing between list items */
+    }
+
+    .subject-list li a {
+        text-decoration: none;  /* Remove default underline */
+        display: block;  /* Make the links block-level for better styling */
+        padding: 10px;  /* Add padding for better clickability */
+        border-radius: 5px;  /* Add rounded corners */
+        color: #333;  /* Default text color */
+        background-color: #e3e3e3;  /* Background color */
+    }
+
+    /* Custom styling for specific subjects */
+    .subject-list li a.subject-web3 {
+        background-color: #ffa07a;  /* Light coral background for 'Web3' */
+        color: #fff;  /* White text color */
+    }
+
+    .subject-list li a.subject-best-css {
+        background-color: #90ee90;  /* Light green background for 'Best CSS' */
+        color: #333;  /* Default text color */
+    }
+
+    .subject-list li a:hover {
+        background-color: #8e7474;  /* Lighter background color on hover */
+    }
+
+    /* Button style */
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<h2>Dashboard</h2>
+<p>Welcome, {{ user.username }}</p>
+<h3>Subjects</h3>
+<ul class="subject-list">
+    {% for subject in subjects %}
+        <li><a href="{% url 'subject_details' subject.id %}" class="{% if subject.subject_name == 'Web3' %}subject-web3{% elif subject.subject_name == 'Best CSS' %}subject-best-css{% endif %}">{{ subject.subject_name }}</a></li>
+    {% endfor %}
+</ul>
+
+<h3>Student Reports</h3>
+<div class="card-container">
+    {% for student_report in student_reports %}
+        <div class="card">
+            <h4>{{ student_report.student.name }} (Roll No: {{ student_report.student.roll_no }})</h4>
+           <p>Subject: {{ student_report.subject.subject_name }}</p>
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in student_report.attendance_records %}
+                        <tr>
+                            <td>{{ record.date }}</td>
+                            <td>{{ record.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Add a button to trigger export -->
+<a href="{% url 'export_attendance' %}" class="btn">Export Attendance</a>
+{% endblock %}

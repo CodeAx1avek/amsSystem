@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.attendance-table th,
+.attendance-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.attendance-form .submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.attendance-form .submit-btn:hover {
+    background-color: #45a049;
+}
+
+.attendance-form input[type="radio"] {
+    display: none;
+}
+
+.attendance-form input[type="radio"] + label {
+    display: inline-block;
+    background-color: #f2f2f2;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.attendance-form input[type="radio"]:checked + label {
+    background-color: #4CAF50;
+    color: white;
+}
+
+</style>
+    <h1>{{ subject.subject_name }}</h1>
+    <form method="post" class="attendance-form">
+        {% csrf_token %}
+        <table class="attendance-table">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>
+                            <input type="radio" id="present_{{ student.id }}" name="status_{{ student.id }}" value="Present" required>
+                            <label for="present_{{ student.id }}">Present</label>
+                            <input type="radio" id="absent_{{ student.id }}" name="status_{{ student.id }}" value="Absent" required>
+                            <label for="absent_{{ student.id }}">Absent</label>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="submit-btn">Submit Attendance</button>
+    </form>
+    {% if attendance_saved %}
+        <p>Attendance for today has already been saved.</p>
+    {% endif %}
+{% endblock %}

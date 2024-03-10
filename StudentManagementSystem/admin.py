@@ -1,25 +1,37 @@
 from django.contrib import admin
-from .models import Faculty, Subject, Attendance, Teacher, Class, Student
-from .forms import TeacherForm
-from django import forms
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from .models import Subject, Attendance, Teacher, Class, Student
 
-class ClassAdminForm(forms.ModelForm):
-    class Meta:
-        model = Class
-        fields = ['branch', 'section', 'year', 'no_of_students', 'subjects']
-        widgets = {
-            'subjects': forms.CheckboxSelectMultiple,  # Use CheckboxSelectMultiple for multiple selections
-        }
+class DateListFilter(admin.DateFieldListFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.title = _('Date')
 
-class ClassAdmin(admin.ModelAdmin):
-    form = ClassAdminForm
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ['student', 'subject', 'date', 'status']  # Display these fields in the admin list view
+    list_filter = [
+        ('date', DateListFilter),  # Filter by date using custom DateListFilter
+        'status',
+        'subject',
+        'student'
+    ]  
 
-class TeacherAdmin(admin.ModelAdmin):
-    form = TeacherForm
+    def year(self, obj):
+        return obj.date.year
 
-admin.site.register(Faculty)
+    def month(self, obj):
+        return obj.date.strftime('%B')  # Month name
+
+    def day(self, obj):
+        return obj.date.strftime('%d')  # Day of the month
+
+    year.short_description = 'Year'
+    month.short_description = 'Month'
+    day.short_description = 'Day'
+
 admin.site.register(Student)
-admin.site.register(Attendance)
+admin.site.register(Attendance, AttendanceAdmin)  # Register Attendance model with custom admin class
 admin.site.register(Subject)
-admin.site.register(Class, ClassAdmin)
-admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Class)
+admin.site.register(Teacher)

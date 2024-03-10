@@ -1,86 +1,78 @@
 {% extends 'base.html' %}
-
-{% block title %}Home - Attendance Management System{% endblock %}
-
 {% block content %}
 <style>
-    /* login.css */
-/* login.css */
-
-/* Background image */
-body {
-    background-image: url('https://us.123rf.com/450wm/kumiho70/kumiho702008/kumiho70200800013/153092261-yellow-school-bus-concept-design-for-putting-a-picture-of-a-child-s-face-in-a-circle.jpg');
-
-    background-position: center; /* Center the background image */
-}
-
-/* Login container */
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Make the container full height of the viewport */
-}
-
-/* Form container */
-.form-container {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
+    .login-container {
+    width: 100%;
     max-width: 400px;
-    margin: 0 auto;
-}
-
-/* Form input fields */
-.form-container label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.form-container input[type="text"],
-.form-container input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
+    margin: 50px auto;
+    padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-/* Submit button */
-.form-container input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.login-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.form-container input[type="submit"]:hover {
-    background-color: #45a049;
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-/* Error message */
-.error-message {
-    color: #f00;
-    margin-top: 10px;
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+    border-radius: 5px;
 }
 
 </style>
-<div class="form-container">
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
+    <div class="login-container">
+        <h1>Login</h1>
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
         
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-        
-        <input type="submit" value="Login">
-    </form>
-</div>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
 {% endblock %}

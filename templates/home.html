@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+<div class="container">
+    <h1>Welcome to Attendance Management System</h1>
+    <p>Manage attendance effortlessly with our system. Keep track of student attendance, generate reports, and more.</p>
+    <a href="{% url 'login' %}" class="btn">Get Started</a>
+</div>
+{% endblock %}
